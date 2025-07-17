@@ -12,9 +12,13 @@ import subprocess
 
 # MY FUNCTION
 def git_commit_and_push():
-    subprocess.run(["git", "add", "README.md"])
-    subprocess.run(["git", "commit", "-m", "Update README.md with new note"])
-    subprocess.run(["git", "push"])
+    try:
+        subprocess.run(["git", "add", "README.md"], check=True)
+        subprocess.run(["git", "commit", "-m", "Update README.md from Streamlit"], check=True)
+        subprocess.run(["git", "push"], check=True)
+        st.success("README.md committed and pushed to GitHub.")
+    except subprocess.CalledProcessError as e:
+        st.error("Git commit/push failed. You may need to set up Git or check permissions.")
 
 
 
