@@ -1,6 +1,62 @@
-import streamlit as st
+# `streamlit run app.py`
+# pip install streamlit numpy pandas
 
-st.title("🎈 My new app")
-st.write(
-    "Let's start building! For help and inspiration, head over to [docs.streamlit.io](https://docs.streamlit.io/)."
-)
+import datetime
+import os
+import streamlit as st
+import numpy as np
+import pandas as pd
+
+st.title("My Web GUI");
+st.write("Hello world from codespace");
+if st.button("Click Me"):
+    st.success("You have clicked the button!");
+
+st.header("y = x^2 Plot")
+
+# Create data for the plot
+x_values = np.linspace(-10, 10, 200)
+y_values = x_values**2
+
+chart_data = pd.DataFrame({
+    'x': x_values,
+    'y': y_values,
+})
+
+st.line_chart(chart_data, x="x", y="y")
+
+# --- Markdown Note-Taking ---
+st.header("Add Note to my_file.md")
+
+with st.form("markdown_note_form", clear_on_submit=True):
+    note_input = st.text_area("Write your note for my_file.md:")
+    submitted = st.form_submit_button("Add Note")
+
+    if submitted and note_input:
+        timestamp = datetime.datetime.now().strftime("%Y/%m/%d (%I:%M %p)")  # Format: YYYY/MM/DD (HH:MM AM/PM)
+        note_content = f"""
+### {timestamp}
+```
+{note_input}
+```
+"""
+        try:
+            with open("my_file.md", "r+") as f:  # Open in read and write mode
+                existing_content = f.read()
+                f.seek(0, 0)  # Move the cursor to the beginning of the file
+                f.write(note_content + existing_content)  # Write the new note at the top
+            st.success(f"Note added to my_file.md!")
+        except FileNotFoundError:
+            st.error("my_file.md not found. Please ensure it exists.")
+
+
+# --- Markdown Previewer ---
+st.header("Preview of my_file.md")
+
+
+try:
+    with open("my_file.md", "r") as f:
+        markdown_content = f.read()
+    st.markdown(markdown_content)
+except FileNotFoundError:
+    st.warning("my_file.md not found. Please create it in the same directory as app.py.")
