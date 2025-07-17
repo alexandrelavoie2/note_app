@@ -6,6 +6,27 @@ import os
 import streamlit as st
 import numpy as np
 import pandas as pd
+import subprocess
+
+
+
+# MY FUNCTION
+def git_commit_and_push():
+    subprocess.run(["git", "add", "README.md"])
+    subprocess.run(["git", "commit", "-m", "Update README.md with new note"])
+    subprocess.run(["git", "push"])
+
+
+
+
+
+
+
+
+
+
+
+
 
 st.title("My Web GUI");
 st.write("Hello world from codespace");
@@ -45,6 +66,11 @@ with st.form("markdown_note_form", clear_on_submit=True):
                 existing_content = f.read()
                 f.seek(0, 0)  # Move the cursor to the beginning of the file
                 f.write(note_content + existing_content)  # Write the new note at the top
+                git_commit_and_push()
+
+
+
+
             st.success(f"Note added to README.md!")
         except FileNotFoundError:
             st.error("README.md not found. Please ensure it exists.")
