@@ -26,10 +26,10 @@ chart_data = pd.DataFrame({
 st.line_chart(chart_data, x="x", y="y")
 
 # --- Markdown Note-Taking ---
-st.header("Add Note to my_file.md")
+st.header("Add Note to README.md")
 
 with st.form("markdown_note_form", clear_on_submit=True):
-    note_input = st.text_area("Write your note for my_file.md:")
+    note_input = st.text_area("Write your note for README.md:")
     submitted = st.form_submit_button("Add Note")
 
     if submitted and note_input:
@@ -41,22 +41,22 @@ with st.form("markdown_note_form", clear_on_submit=True):
 ```
 """
         try:
-            with open("my_file.md", "r+") as f:  # Open in read and write mode
+            with open("README.md", "r+") as f:  # Open in read and write mode
                 existing_content = f.read()
                 f.seek(0, 0)  # Move the cursor to the beginning of the file
                 f.write(note_content + existing_content)  # Write the new note at the top
-            st.success(f"Note added to my_file.md!")
+            st.success(f"Note added to README.md!")
         except FileNotFoundError:
-            st.error("my_file.md not found. Please ensure it exists.")
+            st.error("README.md not found. Please ensure it exists.")
 
 
 # --- Markdown Previewer ---
-st.header("Preview of my_file.md")
+st.header("Preview of README.md")
 
 
 try:
-    with open("my_file.md", "r") as f:
+    with open("README.md", "r") as f:
         markdown_content = f.read()
     st.markdown(markdown_content)
 except FileNotFoundError:
-    st.warning("my_file.md not found. Please create it in the same directory as app.py.")
+    st.warning("README.md not found. Please create it in the same directory as app.py.")
