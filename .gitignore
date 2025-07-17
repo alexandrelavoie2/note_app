@@ -1,3 +1,22 @@
+# I ADDED:
+# ```
+# I don't want people to see the md files
+*.md
+
+# ```
+
+
+
+
+
+
+
+
+# AUTO ADDED:
+
+
+
+
 .streamlit/secrets.toml
 
 # Byte-compiled / optimized / DLL files
